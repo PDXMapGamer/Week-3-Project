@@ -6,7 +6,7 @@ const cookie = document.getElementById("cookie");
 
 let cookieStats = {
   cookieCount: 0,
-  cookiePerSecond: 0,
+  cookiePerSecond: 1,
 };
 
 //TODO SHOP UPGRADES
@@ -15,6 +15,7 @@ let shopUpgrades = [];
 onStartUp(); // everything that needs to be done on start up of the page
 
 function onStartUp() {
+  loadFromLocalStorate();
   updateCookies();
   updateCPS();
   initialiseTimer();
@@ -22,9 +23,11 @@ function onStartUp() {
 
 function updateCookies() {
   displayCookieCount.textContent = `Total Cookies: ${cookieStats.cookieCount}`;
+  saveToLocalStorage();
 }
 function updateCPS() {
   displayCPS.textContent = `Cookies per Second: ${cookieStats.cookiePerSecond}`;
+  saveToLocalStorage();
 }
 
 //TODO GET DATA FROM API
@@ -57,3 +60,13 @@ function initialiseTimer() {
 }
 
 //TODO Store values of cookie count and all upgrades in local storage
+function saveToLocalStorage() {
+  const toBeStoredData = JSON.stringify(cookieStats);
+  localStorage.setItem("cookieStats", toBeStoredData);
+}
+
+function loadFromLocalStorate() {
+  const parsedData = JSON.parse(localStorage.getItem("cookieStats"));
+  cookieStats.cookieCount = parsedData.cookieCount;
+  cookieStats.cookiePerSecond = parsedData.cookiePerSecond;
+}
