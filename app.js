@@ -3,10 +3,11 @@ const menuButton = document.getElementById("menu-button");
 const displayCookieCount = document.getElementById("total-cookies");
 const displayCPS = document.getElementById("cookies-per-second");
 const cookie = document.getElementById("cookie");
+const APIURL = "https://cookie-upgrade-api.vercel.app/api/upgrades";
 
 let cookieStats = {
   cookieCount: 0,
-  cookiePerSecond: 1,
+  cookiePerSecond: 0,
 };
 
 //TODO SHOP UPGRADES
@@ -39,19 +40,20 @@ async function getShopItem() {
 
 //TODO event listener for all buttons
 cookie.addEventListener("click", function () {
-  cookieStats.cookieCount += 1;
+  cookieStats.cookieCount++;
   updateCookies();
-  //TODO Local storage shenanigans
 });
 menuButton.addEventListener("click", function () {
   console.log("Menu button has been clicked");
   //TODO STREACH GOAL: Add functionality to this menu option
 });
 resetButton.addEventListener("click", function () {
-  //TODO Add functionality to the reset button
+  cookieStats.cookieCount = 0;
+  updateCookies();
+  cookieStats.cookiePerSecond = 0;
+  updateCPS();
 });
 
-//TODO timer to add CPS every second.
 function initialiseTimer() {
   setInterval(() => {
     cookieStats.cookieCount += cookieStats.cookiePerSecond;
@@ -59,14 +61,15 @@ function initialiseTimer() {
   }, 1000);
 }
 
-//TODO Store values of cookie count and all upgrades in local storage
 function saveToLocalStorage() {
   const toBeStoredData = JSON.stringify(cookieStats);
   localStorage.setItem("cookieStats", toBeStoredData);
 }
 
 function loadFromLocalStorate() {
-  const parsedData = JSON.parse(localStorage.getItem("cookieStats"));
-  cookieStats.cookieCount = parsedData.cookieCount;
-  cookieStats.cookiePerSecond = parsedData.cookiePerSecond;
+  try {
+    const parsedData = JSON.parse(localStorage.getItem("cookieStats"));
+    cookieStats.cookieCount = parsedData.cookieCount;
+    cookieStats.cookiePerSecond = parsedData.cookiePerSecond;
+  } catch {}
 }
