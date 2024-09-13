@@ -1,0 +1,39 @@
+/* Media queries required   */
+body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 5px;
+  height: 100vh;
+}
+section {
+  position: relative;
+  /* Makes position absolute of child stay within bounds of the section its contained in */
+  height: 100vh;
+}
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#cookie-stats {
+  font-size: 4.2vh;
+  font-weight: bold;
+  height: 20%;
+}
+#buttons {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 5%;
+  height: 10%;
+}
+button {
+  height: 40%;
+  margin-bottom: 10px;
+}
+#cookie {
+  height: 100%;
+}

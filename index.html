@@ -2,10 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="description" content="A cookie clicker game" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
-    <script src="./app.js"></script>
+    <script src="./app.js" defer></script>
     <title>Cookie Clicker</title>
   </head>
-  <body></body>
+  <body>
+    <section id="cookie-section" class="center">
+      <div id="buttons">
+        <button id="menu-button">Menu</button>
+        <button id="reset-button">Reset</button>
+      </div>
+      <div id="cookie-stats">
+        <p id="total-cookies">Total Cookies:</p>
+        <p id="cookies-per-second">Cookies per Second:</p>
+      </div>
+      <!-- The cookie button -->
+      <img id="cookie" class="center" src="./images/Cookie.webp" alt="The cookie you need to click to play the game" />
+    </section>
+    <section id="shop-section"></section>
+  </body>
 </html>
