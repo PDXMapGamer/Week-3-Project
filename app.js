@@ -3,7 +3,7 @@ const menuButton = document.getElementById("menu-button");
 const displayCookieCount = document.getElementById("total-cookies");
 const displayCPS = document.getElementById("cookies-per-second");
 const cookie = document.getElementById("cookie");
-const APIURL = "https://cookie-upgrade-api.vercel.app/api/upgrades";
+const shopSection = document.getElementById("shop-section");
 
 let cookieStats = {
   cookieCount: 0,
@@ -16,6 +16,7 @@ let shopUpgrades = [];
 onStartUp(); // everything that needs to be done on start up of the page
 
 function onStartUp() {
+  generateShop();
   loadFromLocalStorate();
   updateCookies();
   updateCPS();
@@ -31,11 +32,17 @@ function updateCPS() {
   saveToLocalStorage();
 }
 
-//TODO GET DATA FROM API
-async function getShopItem() {
-  //fetch the data
-  //translate to JSON
-  //PUSH items into shopUpgrade arrays
+async function generateShop() {
+  try {
+    const fetchedData = await fetch("https://cookie-upgrade-api.vercel.app/api/upgrades");
+    const parsedData = await fetchedData.json();
+    shopSection.style.gridTemplateRows = `repeat(${parsedData.length + 1}, 1fr)`;
+    parsedData.forEach((element) => {
+      shopUpgrades.push(element); //parsed data is local in scope so passing it onto the global scope in case I need to access it later
+    });
+  } catch {
+    console.log("Failed to fetch from API");
+  }
 }
 
 //TODO event listener for all buttons
@@ -71,5 +78,7 @@ function loadFromLocalStorate() {
     const parsedData = JSON.parse(localStorage.getItem("cookieStats"));
     cookieStats.cookieCount = parsedData.cookieCount;
     cookieStats.cookiePerSecond = parsedData.cookiePerSecond;
-  } catch {}
+  } catch {
+    // no code needed here
+  }
 }
