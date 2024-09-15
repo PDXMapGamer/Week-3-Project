@@ -5,6 +5,7 @@ body {
   grid-template-rows: 1fr;
   column-gap: 5px;
   height: 100vh;
+  margin: 0px;
 }
 section {
   position: relative;
@@ -44,4 +45,18 @@ button {
   overflow: scroll;
   column-gap: 5px;
   row-gap: 5px;
+}
+.grid-item {
+  margin: auto;
+  font-size: 20px;
+  font-weight: bold;
+}
+.error {
+  font-size: 5vh;
+  font-weight: bold;
+}
+.buy-button {
+  width: 50%;
+  margin: auto;
+  /* padding: 10px; */
 }

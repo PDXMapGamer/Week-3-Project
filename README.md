@@ -8,3 +8,4 @@ Bug 3: console.log of length of the shopUpgrades array gave differant values whe
 
 Resources:
 https://cssgrid-generator.netlify.app/ helped with creating the exact grid I want.
+https://masteringjs.io/tutorials/fundamentals/foreach-object As I can't forEach an object this gave me an alternative to do what I was aiming for
