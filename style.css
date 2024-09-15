@@ -71,6 +71,23 @@ button {
   margin: auto;
   min-height: 24px;
 }
+.mid-animation {
+  transform: scale(0.97);
+}
+#sfx-button {
+  background-color: green;
+}
+#animation-button {
+  background-color: green;
+}
+#menu {
+  display: none;
+  flex-direction: column;
+  height: 10vh;
+  width: 20vh;
+  position: fixed;
+  top: 10%;
+}
 
 @media (orientation: portrait) {
   body {

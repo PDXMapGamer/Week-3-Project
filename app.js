@@ -4,6 +4,14 @@ const displayCookieCount = document.getElementById("total-cookies");
 const displayCPS = document.getElementById("cookies-per-second");
 const cookie = document.getElementById("cookie");
 const shopSection = document.getElementById("shop-section");
+const WsoundEffect = new Audio("./sounds/button_sfx.mp3");
+const LsoundEffect = new Audio("./sounds/unallowed.wav");
+const menu = document.getElementById("menu");
+const sfxButton = document.getElementById("sfx-button");
+const animationButton = document.getElementById("animation-button");
+let menuToggled = false;
+let sfxOn = true;
+let animationOn = true;
 
 let cookieStats = {
   cookieCount: 500000,
@@ -89,34 +97,86 @@ function generateBuyButton(element) {
   buyButton.classList.add("buy-button");
   buyButton.textContent = "Buy";
   buyButton.addEventListener("click", function () {
-    //TODO: Add functionality to the buttons to allow user to buy upgrades.
     if (cookieStats.cookieCount >= element.cost) {
       cookieStats.cookieCount -= element.cost;
       cookieStats.cookiePerSecond += element.increase;
+      checkSoundEffect("W");
       updateCookies();
       updateCPS();
     } else {
-      console.log("Not enough cookies to buy");
+      checkSoundEffect("L");
     }
   });
   shopSection.append(buyButton);
+}
+function cookieAnimation() {
+  checkSoundEffect("W");
+  if (animationOn) {
+    cookie.classList.toggle("mid-animation");
+    setTimeout(function () {
+      cookie.classList.toggle("mid-animation");
+    }, 100);
+  }
 }
 
 //TODO event listener for all buttons
 cookie.addEventListener("click", function () {
   cookieStats.cookieCount++;
+  cookieAnimation();
   updateCookies();
 });
+
 menuButton.addEventListener("click", function () {
-  console.log("Menu button has been clicked");
-  //TODO STREACH GOAL: Add functionality to this menu option
+  checkSoundEffect("W");
+  if (menuToggled) {
+    menu.style.display = "none";
+    menuToggled = false;
+  } else {
+    menu.style.display = "block";
+    menuToggled = true;
+  }
 });
+
+sfxButton.addEventListener("click", function () {
+  if (sfxOn) {
+    sfxOn = false;
+    sfxButton.style.backgroundColor = "red";
+  } else {
+    WsoundEffect.play();
+    sfxOn = true;
+    sfxButton.style.backgroundColor = "green";
+  }
+});
+
+animationButton.addEventListener("click", function () {
+  if (animationOn) {
+    animationOn = false;
+    animationButton.style.backgroundColor = "red";
+    checkSoundEffect("W");
+  } else {
+    animationOn = true;
+    animationButton.style.backgroundColor = "green";
+    checkSoundEffect("W");
+  }
+});
+
 resetButton.addEventListener("click", function () {
+  checkSoundEffect("W");
   cookieStats.cookieCount = 0;
   updateCookies();
   cookieStats.cookiePerSecond = 0;
   updateCPS();
 });
+
+function checkSoundEffect(sfxType) {
+  if (sfxOn) {
+    if (sfxType == "W") {
+      WsoundEffect.play();
+    } else if (sfxType == "L") {
+      LsoundEffect.play();
+    }
+  }
+}
 
 function initialiseTimer() {
   setInterval(() => {
